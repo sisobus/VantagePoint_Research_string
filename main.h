@@ -10,10 +10,12 @@
 using namespace std;
 #define MAX_DIMENSION_POW 10
 #define MAX_DIMENSION (1<<10)
-#define INIT_SIZE 100
+#define INIT_SIZE 40
 #define MAX_GENERATION 500
 #define DOMINANCE_SIZE 0.1
 #define MUTATION_CHANCE 0.01
+#define MUTATION_ROW_CHANCE 0.1
+#define MUTATION_BIT_CHANCE 0.3
 
 #ifndef FALSE
 #define FALSE 0
