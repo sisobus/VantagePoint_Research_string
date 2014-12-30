@@ -5,21 +5,20 @@ int N;
 //#define DEBUG
 
 int main(int argc,char *argv[]) {
-    assert(argc <= 0);
+    assert(argc >= 2);
 
     sscanf(argv[1],"%d",&N);
+
+    char filename[(1<<10)];
+    sprintf(filename,"%d.dat",N);
+    FILE *fp = fopen(filename,"w");
 
     makeTwoPowOptimalPoints();
 
 #ifdef DEBUG
     printf("%d\n",(int)twoPowOptimalPoints.size());
     for ( int i = 0 ; i < 5 ; i++ ) {
-        for ( int j = 0 ; j < twoPowOptimalPoints[i].m ; j++ ) {
-            for ( int k = 0 ; k < twoPowOptimalPoints[i].n ; k++ ) 
-                printf("%c ",twoPowOptimalPoints[i].g[j][k]);
-            puts("");
-        }
-        puts("");
+        twoPowOptimalPoints[i].printGene(stdout);
     }
 #endif
 
@@ -42,11 +41,7 @@ int main(int argc,char *argv[]) {
 #endif
 
     if ( iWantDeleteSomeColumn == 0 ) {
-        for ( int i = 0 ; i < twoPowOptimalPoints[optimalPosition].m ; i++ ) {
-            for ( int j = 0 ; j < twoPowOptimalPoints[optimalPosition].n ; j++ ) 
-                printf("%c ",twoPowOptimalPoints[optimalPosition].g[i][j]);
-            puts("");
-        }
+        twoPowOptimalPoints[optimalPosition].printGene(fp);
         return 0;
     }
     Gene now(N,originalColumn);
@@ -91,8 +86,9 @@ int main(int argc,char *argv[]) {
         b[pdi.second] = true;
     }
 
-    ans.printGene(stdout);
+    ans.printGene(fp);
 
+    fclose(fp);
     return 0;
 }
 
